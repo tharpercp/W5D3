@@ -1,5 +1,10 @@
 PRAGMA foreign_keys = ON;
 
+DROP TABLE IF EXISTS question_likes;
+DROP TABLE IF EXISTS replies;
+DROP TABLE IF EXISTS question_follows;
+DROP TABLE IF EXISTS questions;
+DROP TABLE IF EXISTS users;
 
 
 CREATE TABLE users (
@@ -12,8 +17,9 @@ CREATE TABLE questions (
     id INTEGER PRIMARY KEY,
     title VARCHAR,
     body VARCHAR,
+    author_id INTEGER NOT NULL,
 
-    FOREIGN KEY author VARCHAR REFERENCES question_follows(user_id) 
+    FOREIGN KEY (author_id) REFERENCES users(id) 
 );
 
 CREATE TABLE question_follows (
@@ -27,11 +33,9 @@ CREATE TABLE replies (
     parent_reply INTEGER PRIMARY KEY,
     child_reply INTEGER, 
     q_id integer NOT NULL,
-    normal_id integer NOT NULL,
-
     u_id integer NOT NULL,
-
     r_body VARCHAR,
+
     FOREIGN KEY (q_id) REFERENCES questions(id),
     FOREIGN KEY (u_id) REFERENCES users(id),
     FOREIGN KEY (child_reply) REFERENCES replies(parent_reply)
@@ -39,7 +43,7 @@ CREATE TABLE replies (
 
 CREATE TABLE question_likes (
 
-
+    id INTEGER PRIMARY KEY,
     likes integer,
 
     id_u integer,
@@ -49,17 +53,17 @@ CREATE TABLE question_likes (
     FOREIGN KEY (id_q) REFERENCES questions(id)
 );
 
--- INSERT INTO users (fname, lname)
--- VALUES ("John", "Doe");
+INSERT INTO users (fname, lname)
+VALUES ("John", "Doe");
 
--- INSERT INTO users (fname, lname)
--- VALUES ("Jane", "Doe");
+INSERT INTO users (fname, lname)
+VALUES ("Jane", "Doe");
 
--- INSERT INTO questions (title, body)
--- VALUES ("AA_Question", "What is coding?");
+INSERT INTO questions (title, body, author_id)
+VALUES ("AA_Question", "What is coding?", 1);
 
--- INSERT INTO replies (q_id, normal_id, u_id, r_body)
--- VALUES ( 1, 1, 1, "Coding is fun!");
+INSERT INTO replies (child_reply, q_id, u_id, r_body)
+VALUES ( 1, 1, 1, "Coding is fun!");
 
--- INSERT INTO question_likes(likes, id_u, id_q)
--- VALUES (1000000, 2, 2);
+INSERT INTO question_likes(likes, id_u, id_q)
+VALUES (2, 2, 1);
