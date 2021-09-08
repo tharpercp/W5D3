@@ -2,36 +2,54 @@ PRAGMA foreign_keys = ON;
 
 
 
-add TABLE users (
-    fname VARCHAR
+CREATE TABLE users (
+    fname VARCHAR,
     lname VARCHAR
-    
-)
+);
 
-add TABLE questions (
-    title VARCHAR
-    body VARCHAR
-    author INTEGER 
-    FOREIGN KEY (author)
-)
+CREATE TABLE questions (
+    title VARCHAR,
+    body VARCHAR,
 
-add TABLE question_follows (
-    question_id INTEGER NOT NULL
+    author PRIMARY KEY
+);
+
+CREATE TABLE question_follows (
+    question_id PRIMARY KEY,
     user_id INTEGER NOT NULL
-    PRIMARY KEY (question_id)
-    PRIMARY KEY (user_id)
-)
-add TABLE replies (
+);
+CREATE TABLE replies (
 
-    q_id INTEGER NOT NULL
-    normal_id INTEGER NOT NULL
+    q_id integer NOT NULL,
+    normal_id integer NOT NULL,
 
-    u_id INTEGER NOT NULL
+    u_id integer NOT NULL,
 
     r_body VARCHAR
-
-    PRIMARY KEY (normal_id)
-    FOREIGN KEY (q_id)
-    FOREIGN KEY (u_id)
     
-)
+);
+
+CREATE TABLE question_likes (
+
+
+    likes integer,
+
+    id_u integer,
+    id_q integer 
+
+);
+
+INSERT INTO users (fname, lname)
+VALUES ("John", "Doe");
+
+INSERT INTO users (fname, lname)
+VALUES ("Jane", "Doe");
+
+INSERT INTO questions (title, body)
+VALUES ("AA_Question", "What is coding?");
+
+INSERT INTO replies (q_id, normal_id, u_id, r_body)
+VALUES ( 1, 1, 1, "Coding is fun!");
+
+INSERT INTO question_likes(likes, id_u, id_q)
+VALUES (1000000, 2, 2);
